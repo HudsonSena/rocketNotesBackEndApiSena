@@ -9,6 +9,10 @@ class UsersController {
     async create(request, response){
         const {name, email, password} = request.body;
 
+        if(email == ''){
+            throw new AppError('E-mail inválido')
+        };
+
         const userRepository = new UserRepository();
         const userCreateService = new UserCreateService(userRepository);
 
