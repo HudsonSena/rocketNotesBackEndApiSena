@@ -13,6 +13,10 @@ class UserCreateService {
             throw new AppError("Este e-mail já está em uso.");
         }
 
+        if(checkUserExists == ''){
+            throw new AppError("E-mail inválido.")
+        }
+
         const hashedPassword = await hash(password, 8)
 
         const userCreated = await this.userRepository.create({ name, email, password: hashedPassword });
