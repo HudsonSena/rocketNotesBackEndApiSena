@@ -10,13 +10,13 @@ class SessionsController {
 
         const user = await knex("users").where({ email }).first();
 
-        if(!user) {
+        if (!user) {
             throw new AppError("Email e/ou senha incorreto", 401);
         }
 
         const passwordMatched = await compare(password, user.password);
 
-        if(!passwordMatched) {
+        if (!passwordMatched) {
             throw new AppError("Email e/ou senha incorreto", 401);
         }
 
@@ -25,6 +25,8 @@ class SessionsController {
             subject: String(user.id),
             expiresIn
         })
+
+        delete user.password
 
         return response.json({ user, token });
     }
